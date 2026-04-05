@@ -44,8 +44,8 @@ teardown() {
   assert_output --partial "October CMS"
   assert_success
 
-  # check admin is accessible
-  run curl -sfIv https://${PROJNAME}.ddev.site/admin
+  # check admin is accessible (follows redirect to login page)
+  run curl -sfIv -L https://${PROJNAME}.ddev.site/admin
   assert_output --partial "HTTP/2 200"
   assert_success
 
