@@ -44,9 +44,14 @@ teardown() {
   assert_output --partial "Welcome to October CMS!"
   assert_success
 
-  # check admin is accessible (follows redirect to setup/login page)
+  # check admin is accessible (follows redirect to login page)
   run curl -sfv -L https://${PROJNAME}.ddev.site/admin
-  assert_output --partial "Administration Area"
+  assert_output --partial "Administration Area | October CMS"
+  assert_success
+
+  # check admin setup page is accessible
+  run curl -sfIv -L https://${PROJNAME}.ddev.site/admin/backend/auth/setup
+  assert_output --partial "HTTP/2 200"
   assert_success
 
   # check used database
